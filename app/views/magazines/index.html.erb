@@ -1,0 +1,61 @@
+<% if can? :create, Magazine %>
+
+<br><br>
+<table>
+  <h1>Krajki</h1>
+  <thead>
+    <tr>
+      <th>Name..............</th>
+      <th>Description..............</th>
+      <th>Price..............</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @magazines.each do |magazine| %>
+      <tr>
+        <td><%= magazine.name %></td>
+        <td><%= magazine.description %></td>
+        <td><%= magazine.price %></td>
+
+        <td><%= link_to 'Show.....', magazine %></td>
+        <td>  
+          <% if can? :update, magazine %>
+            <%= link_to 'Edit.....', edit_magazine_path(magazine) %>
+          <% end %>
+        </td>
+        <td>  
+          <% if can? :destroy, magazine %>
+            <%= link_to 'Destroy.....', magazine, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if can? :manage, :all %>
+  <h1>Zamówienia użytkowników</h1>
+  <%= link_to 'Zamówienia użytkowników', client_orders_path %>
+  <h1>Użytkownicy</h1>
+  <%= link_to 'Użytkownicy', users_path %>
+<% end %>
+
+<% else %>
+
+
+<% if can? :create, Magazine %>
+  <%= link_to 'New Magazine', new_magazine_path %>
+<% end %>
+
+<h3 class="text-center">Krajki w sprzedaży</h3>
+
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <% @magazines.each do |magazine| %>
+      <%= render "magazine_row", magazine: magazine, order_item: @order_item %>
+    <% end %>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,24 @@
+
+
+<p>
+  <strong>Nazwa:</strong>
+  <%= @magazine.name %>
+</p>
+
+<p>
+  <strong>Opis:</strong>
+  <%= @magazine.description %>
+</p>
+
+<p>
+  <strong>Cena:</strong>
+  <%= @magazine.price %>
+</p>
+
+<p>
+  <strong>Okładka:</strong>
+  <%= image_tag(@magazine.picture_url, :width => 600) if @magazine.picture.present? %>
+</p>
+
+<%= link_to 'Edytuj magazyn', edit_magazine_path(@magazine) %> |
+<%= link_to 'Wstecz', magazines_path %>

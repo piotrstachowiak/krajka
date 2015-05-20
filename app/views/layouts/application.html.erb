@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Krajka</title>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <% if request.ssl? %>
+    <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' %>
+    <%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js' %>
+  <% else %> 
+    <%= stylesheet_link_tag 'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' %>
+    <%= javascript_include_tag 'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js' %>
+  <% end %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+      <h1><%= link_to "Czuwaj!", root_path %></h1>
+    </div>
+    <% if user_signed_in? %>
+    <div class="col-xs-6 text-right">
+      <h1 class="cart-text"><%= render 'layouts/cart_text' %></h1>
+    </div>
+    <% end %>
+  </div>
+  <hr>
+
+
+    <% if user_signed_in? %>
+        Zalogowany jako <%= current_user.email %>. <br>
+        <%= link_to "Edytuj profil", edit_user_registration_path %>
+        <%= link_to "Wyloguj", destroy_user_session_path, :method => :delete %>
+    <% else %>
+        <%= link_to "Zarejestruj się", new_user_registration_path %> lub <%= link_to "Zaloguj się", new_user_session_path %>
+    <% end %>
+    <br><br>
+    
+    <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, id: "flash_#{name}" %>
+    <% end %> 
+
+    <%= yield %>
+</div>
+
+</body>
+</html>
